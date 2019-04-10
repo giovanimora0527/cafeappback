@@ -1,0 +1,1 @@
+Colocar en esta carpeta los scripts de datos básicos y demás datos que sean necesarios para inicializar la aplicación

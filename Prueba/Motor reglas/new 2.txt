@@ -1,0 +1,22 @@
+
+		// final String drl = converter.compile(rs, new FileInputStream(new
+		// File("./data/reglas/prueba.drl")));
+
+
+		// kbuilder.add(ResourceFactory.newFileResource(new
+		// File("./data/reglas/prueba.xlsx")), ResourceType.DTABLE);
+		// kbuilder.add(ResourceFactory.newClassPathResource("prueba.drl", getClass()),
+		// ResourceType.DRL);
+
+		// kbuilder.add(ResourceFactory.newFileResource(new
+		// File("./data/reglas/prueba.drl")), ResourceType.DRL);
+		
+		
+		
+		spring.datasource.url = jdbc:mysql://localhost:3306/fae?useSSL=false
+spring.datasource.username = root
+spring.datasource.password = fido
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+
+server.port = 8505

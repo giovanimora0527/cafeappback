@@ -1,0 +1,39 @@
+
+	/**
+	 * Método que aplica las reglas de negocio a las facturas que esten en las
+	 * reglas ingresadas y las que no hayan encajado en una regla de negocio.
+	 *
+	 * @param idIps
+	 *            id de la IPS
+	 * @param reglaAplican
+	 *            Ids de las reglas de negocio que se van a volver nuevas reglas de
+	 *            negocio.
+	 * @return Respuesta notificando que el proceso termino de forma correcta.
+	 * @throws TemplateException
+	 *             Lanza excepción de plantilla.
+	 * @throws IOException
+	 *             Lanza excepción I/O.
+	 * @throws SQLException
+	 *             Lanza excepción SQL.
+	 * @throws MotorException
+	 *             Lanza excepción de Motor de reglas.
+	 */
+	@PostMapping("/{idIps}")
+	public ResponseEntity<String> aplicarReglas(@PathVariable("idIps") Integer idIps,
+			@RequestBody List<Factura> reglaAplican)
+			throws TemplateException, IOException, SQLException, MotorException {
+
+		InternalKnowledgeBase kbase = motorReglas.construirReglas(idIps);
+		StatelessKieSession kieSession = kbase.newStatelessKieSession();
+
+		Collection<Integer> valoresReglaAplica = utilidadesClase.getReglaAplica(reglaAplican);
+		valoresReglaAplica.add(0);
+		List<Factura> facturas = (List<Factura>) repositorioFactura.findByReglaAplicaIn(valoresReglaAplica);
+
+		// Se Aplican reglas
+		kieSession.execute(facturas);
+		repositorioFactura.saveAll(facturas);
+
+		return ResponseEntity.ok().body("Se aplicaron reglas con exito.");
+
+	}
